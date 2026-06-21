@@ -9,11 +9,13 @@ class AppPrimaryButton extends StatelessWidget {
     required this.label,
     this.onPressed,
     this.icon,
+    this.backgroundColor,
   });
 
   final String label;
   final VoidCallback? onPressed;
   final IconData? icon;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class AppPrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
+          backgroundColor: backgroundColor ?? AppColors.primary,
           foregroundColor: Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(

@@ -68,3 +68,32 @@ class UploadDraftUseCase {
     }
   }
 }
+
+class PublishLocalDraftUseCase {
+  const PublishLocalDraftUseCase(this._storage);
+
+  final DraftStorageService _storage;
+
+  Future<Result<ScreenplayDraftManifest>> call(
+    ScreenplayDraftManifest manifest,
+  ) async {
+    try {
+      final now = DateTime.now().toUtc();
+      final updated = manifest.copyWith(
+        screenplay: manifest.screenplay.copyWith(
+          localModifiedAt: now,
+          data: manifest.screenplay.data.copyWith(publishStatus: 1),
+        ),
+        sync: manifest.sync.copyWith(
+          lastLocalSaveAt: now,
+          pendingUpload: manifest.screenplay.remoteId == null,
+        ),
+      );
+      await _storage.save(updated);
+      final saved = await _storage.load(updated.draftId);
+      return Success(saved);
+    } catch (e) {
+      return Failure(Exception(e.toString()));
+    }
+  }
+}

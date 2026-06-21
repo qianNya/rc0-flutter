@@ -57,7 +57,7 @@ class DraftStorageService {
         DraftAct(
           localId: 'act-${_uuid.v4()}',
           localModifiedAt: now,
-          data: const DraftActData(title: '第一幕', sort: 1),
+          data: const DraftActData(title: '开场', sort: 1),
           scenes: [
             DraftScene(
               localId: 'scene-${_uuid.v4()}',

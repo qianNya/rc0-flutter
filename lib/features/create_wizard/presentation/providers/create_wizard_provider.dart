@@ -65,7 +65,8 @@ class CreateWizardNotifier extends StateNotifier<CreateWizardState> {
     this._loadDraft,
     this._saveDraft,
     this._createDraft,
-    this._uploadDraft, {
+    this._uploadDraft,
+    this._publishLocal, {
     String? draftId,
   }) : super(const CreateWizardState()) {
     _init(draftId);
@@ -75,6 +76,7 @@ class CreateWizardNotifier extends StateNotifier<CreateWizardState> {
   final SaveDraftUseCase _saveDraft;
   final CreateDraftUseCase _createDraft;
   final UploadDraftUseCase _uploadDraft;
+  final PublishLocalDraftUseCase _publishLocal;
 
   Future<void> _init(String? draftId) async {
     state = state.copyWith(isLoading: true, error: null);
@@ -146,6 +148,10 @@ class CreateWizardNotifier extends StateNotifier<CreateWizardState> {
         data: m.screenplay.data.copyWith(summary: summary),
       ),
     );
+  });
+
+  void updateAuthorName(String authorName) => _updateManifest((m) {
+    return m.copyWith(authorName: authorName);
   });
 
   Future<void> setCoverFromFile(File file, String assetRef, String relativePath) async {
@@ -345,6 +351,33 @@ class CreateWizardNotifier extends StateNotifier<CreateWizardState> {
     return m.copyWith(acts: acts);
   });
 
+  void updateActTitle(int actIndex, String title) => _updateManifest((m) {
+    if (actIndex < 0 || actIndex >= m.acts.length) return m;
+    final acts = List<DraftAct>.from(m.acts);
+    final act = acts[actIndex];
+    acts[actIndex] = act.copyWith(
+      localModifiedAt: DateTime.now().toUtc(),
+      data: act.data.copyWith(title: title),
+    );
+    return m.copyWith(acts: acts);
+  });
+
+  Future<ScreenplayDraftManifest?> publishLocal() async {
+    final manifest = state.manifest;
+    if (manifest == null) return null;
+    await _persist();
+    state = state.copyWith(isSaving: true, error: null);
+    final result = await _publishLocal(manifest);
+    state = state.copyWith(isSaving: false);
+    if (result is Failure<ScreenplayDraftManifest>) {
+      state = state.copyWith(error: result.exception.toString());
+      return null;
+    }
+    final published = (result as Success<ScreenplayDraftManifest>).data;
+    state = state.copyWith(manifest: published);
+    return published;
+  }
+
   Future<ScreenplayDraftManifest?> publish() async {
     final manifest = state.manifest;
     if (manifest == null) return null;
@@ -380,6 +413,7 @@ final createWizardProvider =
     ref.watch(saveDraftUseCaseProvider),
     ref.watch(createDraftUseCaseProvider),
     ref.watch(uploadDraftUseCaseProvider),
+    ref.watch(publishLocalDraftUseCaseProvider),
   );
 });
 
@@ -390,6 +424,7 @@ final createWizardFamilyProvider = StateNotifierProvider.family<
     ref.watch(saveDraftUseCaseProvider),
     ref.watch(createDraftUseCaseProvider),
     ref.watch(uploadDraftUseCaseProvider),
+    ref.watch(publishLocalDraftUseCaseProvider),
     draftId: draftId,
   );
 });

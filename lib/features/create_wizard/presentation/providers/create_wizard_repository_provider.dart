@@ -17,3 +17,7 @@ final createDraftUseCaseProvider = Provider<CreateDraftUseCase>((ref) {
 final uploadDraftUseCaseProvider = Provider<UploadDraftUseCase>((ref) {
   return UploadDraftUseCase(ref.watch(screenplaySyncServiceProvider));
 });
+
+final publishLocalDraftUseCaseProvider = Provider<PublishLocalDraftUseCase>((ref) {
+  return PublishLocalDraftUseCase(ref.watch(draftStorageServiceProvider));
+});
