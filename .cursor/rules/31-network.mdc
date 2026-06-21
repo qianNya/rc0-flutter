@@ -1,0 +1,32 @@
+---
+description: 网络层 Dio 与异常处理规范
+globs: lib/**/network/**,lib/**/datasources/**,lib/core/**
+alwaysApply: false
+---
+
+# 网络层
+
+统一 **Dio**，结构：
+
+```
+network/
+  dio_client.dart
+  interceptors/
+    auth_interceptor.dart
+    log_interceptor.dart
+```
+
+禁止页面或 Widget 直接调用 Dio。
+
+## 错误分类
+
+统一 `AppException` 子类：
+- `NetworkException` / `ApiException` / `CacheException` / `UnknownException`
+
+## 日志
+
+使用 `logger`，禁止 `print()`。
+
+格式：`[Time][Level][Module][Action][Message]`
+
+示例：`[2026-06-22 12:00:00][INFO][AUTH][LOGIN][user login success]`

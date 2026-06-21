@@ -1,0 +1,14 @@
+---
+description: Git Commit 消息规范
+alwaysApply: true
+---
+
+# Git Commit
+
+前缀：`feat:` `fix:` `refactor:` `style:` `test:` `docs:`
+
+禁止：`update`、`change` 等模糊描述。
+
+示例：
+- `feat: add user login use case`
+- `fix: resolve riverpod dispose leak in home provider`

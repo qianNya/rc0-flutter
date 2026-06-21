@@ -1,0 +1,26 @@
+---
+description: 规则索引（已拆分为模块化 .mdc，本文件仅作导航）
+alwaysApply: false
+---
+
+# 规则索引
+
+原 `demo.mdc` 已拆分为高效 Agent 规则，按场景自动加载：
+
+| 文件 | 作用域 |
+|------|--------|
+| `00-core-principles.mdc` | 始终：核心原则与架构总览 |
+| `01-agent-workflow.mdc` | 始终：Agent 流程与输出规范 |
+| `40-security.mdc` | 始终：安全规范 |
+| `51-git-commit.mdc` | 始终：Commit 规范 |
+| `10-architecture.mdc` | `lib/**`：Feature 结构与分层 |
+| `11-naming.mdc` | `lib/**/*.dart`：命名 |
+| `20-riverpod.mdc` | Provider 文件：Riverpod |
+| `21-presentation.mdc` | UI 层：Widget/页面 |
+| `30-domain-data.mdc` | domain/data：Repository |
+| `31-network.mdc` | 网络与 datasource |
+| `32-routing.mdc` | 路由 |
+| `33-theme-i18n-assets.mdc` | 主题/国际化/资源 |
+| `50-testing.mdc` | `test/**`：测试 |
+
+完整规范内容见各拆分文件。

@@ -1,0 +1,28 @@
+---
+description: Feature 目录结构与分层规范
+globs: lib/**
+alwaysApply: false
+---
+
+# Feature 标准结构
+
+```
+features/<name>/
+  presentation/   pages/ widgets/ providers/
+  domain/         entities/ repositories/ usecases/
+  data/           models/ datasources/ repositories/
+```
+
+## 数据流（强制）
+
+```
+UI → Provider → UseCase → Repository → Datasource
+```
+
+UI **禁止**直接访问 Repository 或 Dio。
+
+## 页面三件套
+
+每个页面：`XxxPage` + `XxxView` + `XxxProvider`
+
+示例：`home_page.dart` / `home_view.dart` / `home_provider.dart`

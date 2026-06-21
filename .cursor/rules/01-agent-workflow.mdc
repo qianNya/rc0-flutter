@@ -1,0 +1,32 @@
+---
+description: AI Agent 开发流程与输出规范（始终生效）
+alwaysApply: true
+---
+
+# Agent 工作流
+
+禁止跳步骤，按序执行：
+
+```
+需求分析 → 架构设计 → 数据模型 → 接口定义
+→ Provider → Repository → UI
+```
+
+## 生成代码前
+
+先输出 **Architecture Plan**（模块、目录、依赖关系）。
+
+## 生成代码后
+
+输出：
+- Files Created / Modified Files
+- Dependency Changes
+- Risk Analysis
+
+## Code Review 检查项
+
+- 空安全、命名规范、Riverpod 分层
+- 性能（列表 builder）、内存泄漏
+- Build 方法无污染（无网络/DB/重计算）
+
+发现问题必须修复。

@@ -1,0 +1,30 @@
+---
+description: Dart/Flutter 命名规范
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# 命名规范
+
+| 类型 | 风格 | 示例 |
+|------|------|------|
+| Class | PascalCase | `UserProfilePage` |
+| 变量/方法 | camelCase | `userName` |
+| 文件 | snake_case | `user_profile_page.dart` |
+
+禁止：`UserPageFinalNew.dart`、含义模糊缩写。
+
+## Provider 文件
+
+一业务一文件，禁止 SuperProvider：
+
+```
+user_provider.dart
+product_provider.dart
+order_provider.dart
+```
+
+## Repository
+
+接口：`abstract class UserRepository`
+实现：`UserRepositoryImpl`

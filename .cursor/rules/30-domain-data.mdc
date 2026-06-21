@@ -1,0 +1,33 @@
+---
+description: Domain/Data 层与 Repository 规范
+globs: lib/**/domain/**,lib/**/data/**,lib/**/repositories/**
+alwaysApply: false
+---
+
+# Repository
+
+- 只定义业务接口，实现类命名 `XxxRepositoryImpl`
+- 禁止在 Repository 内直接写 Dio 调用
+
+```dart
+abstract class UserRepository {
+  Future<Result<User>> getUser(String id);
+}
+```
+
+## 数据层结构
+
+```
+data/
+  models/        # DTO / JSON 序列化
+  datasources/   # 远程/本地数据源
+  repositories/  # RepositoryImpl
+```
+
+## 本地存储
+
+推荐 **Isar**，结构放 `collections/`。禁止直接 Json 文件存储。
+
+## API 返回
+
+统一 `Result<T>`（`Success` / `Failure`），禁止将异常直接抛给 UI。

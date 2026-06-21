@@ -1,0 +1,12 @@
+---
+description: 安全规范（Token/密钥存储）
+alwaysApply: true
+---
+
+# 安全
+
+禁止明文存储：Token、密码、API Key。
+
+敏感数据统一使用 `flutter_secure_storage`。
+
+网络传输通过 `auth_interceptor` 注入凭证，不在代码中硬编码密钥。

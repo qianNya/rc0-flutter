@@ -1,0 +1,20 @@
+---
+description: 测试覆盖规范
+globs: test/**,**/*_test.dart
+alwaysApply: false
+---
+
+# 测试
+
+必须覆盖：Repository、UseCase、Provider、Widget。
+
+最低覆盖率：**80%**。
+
+优先测业务逻辑与状态流转，避免只测 UI 渲染。
+
+```bash
+flutter test
+flutter analyze   # CI 门禁
+```
+
+CI/CD 要求 analyze + test + build 全部通过才能合并。

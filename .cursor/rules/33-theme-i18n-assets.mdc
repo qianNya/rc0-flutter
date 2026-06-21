@@ -1,0 +1,35 @@
+---
+description: 主题、国际化与资源规范
+globs: lib/**/theme/**,lib/l10n/**,assets/**
+alwaysApply: false
+---
+
+# 主题
+
+```
+theme/
+  app_theme.dart
+  colors.dart
+  typography.dart
+  spacing.dart
+  radius.dart
+```
+
+颜色、字号、间距必须来自 `Theme`，禁止硬编码。
+
+# 国际化
+
+使用 `flutter_localizations` + `intl`。
+
+```dart
+// ❌ Text("登录")
+// ✅ Text(context.l10n.login)
+```
+
+# 资源
+
+```
+assets/images/ | icons/ | animations/
+```
+
+矢量图统一 `flutter_svg`，禁止用 png 替代 svg。禁止随机路径放置资源。

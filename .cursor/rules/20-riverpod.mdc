@@ -1,0 +1,26 @@
+---
+description: Riverpod 状态管理规范
+globs: lib/**/*provider*.dart,lib/**/providers/**
+alwaysApply: false
+---
+
+# 状态管理
+
+**唯一允许：Riverpod**（禁止 GetX / Provider / ScopedModel）
+
+## Provider 职责
+
+- 每个 Provider 只负责一种业务状态
+- 通过 UseCase 调用 Repository，不直接操作 Dio/DB
+
+## 异步状态
+
+使用 `AsyncValue` 或 `Result<T>`，避免 UI 层大量 try-catch。
+
+```dart
+// ❌ 页面直接调 Repository
+ref.read(userRepoProvider).getUser();
+
+// ✅ Provider → UseCase → Repository
+ref.read(userProvider.notifier).loadUser();
+```

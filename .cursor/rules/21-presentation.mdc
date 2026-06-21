@@ -1,0 +1,28 @@
+---
+description: Widget、页面与 Build 方法规范
+globs: lib/**/presentation/**,lib/**/pages/**,lib/**/widgets/**,lib/**/*_page.dart,lib/**/*_view.dart
+alwaysApply: false
+---
+
+# Widget 规范
+
+一 Widget 一职责，禁止 God Widget。
+
+满足任一条件必须拆分：
+- 超过 200 行
+- 超过 5 个子组件
+- 超过 3 层嵌套
+
+## Build 方法禁止
+
+- 网络请求、数据库操作、复杂计算
+
+Build 仅做状态渲染。
+
+## 性能
+
+列表必须用 `ListView.builder` / `GridView.builder`，禁止 `ListView(children: [...])` 长列表。
+
+## 路由
+
+禁止页面内 `Navigator.push`，统一 `go_router`。
